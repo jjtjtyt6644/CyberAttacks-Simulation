@@ -21,6 +21,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/admin', express.static(path.join(__dirname, 'admin')));
+
+// Suppress favicon 404s
+app.get('/favicon.ico', (req, res) => res.status(204).end());
+app.get('/admin/favicon.ico', (req, res) => res.status(204).end());
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'html');
 app.engine('html', require('fs').readFileSync.bind(require('fs')));

@@ -6,321 +6,325 @@
 <title>NexCorp — Dashboard</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --bg: #070b10;
-    --surface: #0b1420;
-    --border: #152030;
-    --accent: #00d4ff;
-    --danger: #ff3366;
-    --warn: #ffaa00;
-    --success: #00e676;
-    --text: #dde4f0;
-    --muted: #566a8a;
-  }
-  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', 'Segoe UI', system-ui, sans-serif, 'Segoe UI', system-ui, sans-serif; font-weight: 300; min-height: 100vh; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #07090e; --surface: #0c1018; --surface2: #101820; --border: #161f2e; --border2: #1e2d42;
+  --accent: #38bdf8; --red: #f43f5e; --yellow: #fbbf24; --green: #34d399; --purple: #818cf8; --orange: #fb923c;
+  --text: #e2e8f0; --text2: #94a3b8; --text3: #475569;
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --mono: 'JetBrains Mono', 'Cascadia Code', 'Consolas', monospace;
+}
+body { background:var(--bg); color:var(--text); font-family:var(--font); font-size:13px; min-height:100vh; }
 
-  nav {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 1rem 2.5rem; background: var(--surface);
-    border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 10;
-  }
-  .logo { font-family: 'Syne', 'Segoe UI', system-ui, sans-serif; font-weight: 800; font-size: 1.2rem; color: var(--accent); }
-  .logo span { color: var(--text); }
-  .nav-right { display: flex; align-items: center; gap: 1rem; }
-  #userLabel { font-size: 0.8rem; color: var(--muted); font-family: 'DM Mono', 'Consolas', 'Courier New', monospace; }
-  .btn { padding: 0.4rem 1rem; border-radius: 4px; font-size: 0.8rem; cursor: pointer; border: 1px solid var(--border); background: transparent; color: var(--muted); transition: all 0.2s; font-family: 'DM Sans', 'Segoe UI', system-ui, sans-serif, 'Segoe UI', system-ui, sans-serif; }
-  .btn:hover { border-color: var(--accent); color: var(--accent); }
-  .btn-danger:hover { border-color: var(--danger); color: var(--danger); }
+nav { display:flex; align-items:center; justify-content:space-between; padding:0 24px; height:54px; background:var(--surface); border-bottom:1px solid var(--border); position:sticky; top:0; z-index:10; }
+.nav-brand { font-size:15px; font-weight:800; color:var(--accent); letter-spacing:-0.3px; }
+.nav-brand span { color:var(--text); }
+.nav-brand-sub { font-size:10px; color:var(--text3); font-family:var(--mono); font-weight:400; margin-left:6px; }
+.nav-right { display:flex; align-items:center; gap:10px; }
+.user-pill { display:flex; align-items:center; gap:6px; padding:4px 10px; background:var(--surface2); border:1px solid var(--border); border-radius:6px; font-size:11px; font-family:var(--mono); color:var(--text2); }
+.btn { padding:6px 14px; border-radius:6px; font-family:var(--font); font-size:12px; font-weight:500; cursor:pointer; border:1px solid var(--border); background:transparent; color:var(--text2); transition:all 0.15s; text-decoration:none; display:inline-flex; align-items:center; gap:5px; }
+.btn:hover { border-color:var(--border2); color:var(--text); }
+.btn-red { border-color:rgba(244,63,94,0.3); color:var(--red); background:rgba(244,63,94,0.06); }
+.btn-red:hover { background:rgba(244,63,94,0.12); }
 
-  main { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+main { max-width:1100px; margin:0 auto; padding:24px; }
+.page-title { font-size:20px; font-weight:700; letter-spacing:-0.02em; margin-bottom:4px; }
+.page-sub { font-size:12px; color:var(--text3); margin-bottom:20px; }
 
-  .page-title { font-family: 'Syne', 'Segoe UI', system-ui, sans-serif; font-weight: 700; font-size: 1.8rem; letter-spacing: -0.02em; margin-bottom: 0.3rem; }
-  .page-sub { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; }
+.info-banner { padding:10px 14px; background:rgba(56,189,248,0.06); border:1px solid rgba(56,189,248,0.15); border-radius:8px; font-size:11px; color:var(--text2); font-family:var(--mono); line-height:1.8; margin-bottom:20px; }
+.info-banner strong { color:var(--accent); }
 
-  /* Vulnerability labs grid */
-  .labs-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin-bottom: 2rem; }
+.labs-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin-bottom:20px; }
+.lab { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:18px; transition:border-color 0.15s; }
+.lab:hover { border-color:var(--border2); }
+.lab-head { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+.lab-icon { font-size:18px; }
+.lab-title { font-size:13px; font-weight:600; }
+.lab-badge { margin-left:auto; padding:2px 7px; border-radius:4px; font-size:9px; font-weight:600; font-family:var(--mono); text-transform:uppercase; letter-spacing:0.3px; }
+.badge-critical { background:rgba(244,63,94,0.12); color:var(--red); border:1px solid rgba(244,63,94,0.2); }
+.badge-high { background:rgba(251,191,36,0.1); color:var(--yellow); border:1px solid rgba(251,191,36,0.2); }
+.lab-desc { font-size:12px; color:var(--text2); line-height:1.6; margin-bottom:12px; }
+.lab-row { display:flex; gap:6px; }
+.lab-input { flex:1; padding:7px 10px; background:var(--surface2); border:1px solid var(--border); border-radius:6px; color:var(--text); font-family:var(--mono); font-size:12px; outline:none; min-width:0; }
+.lab-input:focus { border-color:var(--accent); }
+.lab-run { padding:7px 14px; background:var(--accent); border:none; border-radius:6px; color:#000; font-size:12px; font-weight:600; cursor:pointer; white-space:nowrap; transition:background 0.15s; font-family:var(--font); }
+.lab-run:hover { background:#0ea5e9; }
+.lab-output { margin-top:8px; padding:10px; background:var(--bg); border:1px solid var(--border); border-radius:6px; font-family:var(--mono); font-size:11px; color:var(--green); max-height:140px; overflow-y:auto; white-space:pre-wrap; word-break:break-all; display:none; }
+.lab-output.show { display:block; }
+.lab-output.err { color:var(--red); }
 
-  .lab-card {
-    background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
-    padding: 1.5rem; transition: border-color 0.2s;
-  }
-  .lab-card:hover { border-color: rgba(0,212,255,0.3); }
-  .lab-header { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1rem; }
-  .lab-icon { font-size: 1.4rem; }
-  .lab-title { font-family: 'Syne', 'Segoe UI', system-ui, sans-serif; font-weight: 600; font-size: 1rem; }
-  .lab-badge { margin-left: auto; padding: 0.2rem 0.6rem; border-radius: 3px; font-size: 0.65rem; letter-spacing: 0.06em; text-transform: uppercase; }
-  .badge-critical { background: rgba(255,51,102,0.1); border: 1px solid rgba(255,51,102,0.2); color: var(--danger); }
-  .badge-high { background: rgba(255,170,0,0.1); border: 1px solid rgba(255,170,0,0.2); color: var(--warn); }
-  .lab-desc { font-size: 0.82rem; color: var(--muted); margin-bottom: 1rem; line-height: 1.6; }
+.section-title { font-size:14px; font-weight:600; margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+.section-sub { font-size:11px; color:var(--text3); font-weight:400; }
+.posts-list { display:flex; flex-direction:column; gap:8px; margin-bottom:12px; }
+.post { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:12px 14px; }
+.post-title { font-size:13px; font-weight:600; margin-bottom:4px; }
+.post-content { font-size:12px; color:var(--text2); }
+.new-post { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:14px; display:flex; flex-direction:column; gap:7px; }
+.new-post input, .new-post textarea { padding:8px 10px; background:var(--surface2); border:1px solid var(--border); border-radius:6px; color:var(--text); font-family:var(--font); font-size:13px; outline:none; }
+.new-post input:focus, .new-post textarea:focus { border-color:var(--accent); }
+.new-post textarea { min-height:70px; resize:vertical; }
 
-  .lab-form { display: flex; flex-direction: column; gap: 0.5rem; }
-  .lab-input { padding: 0.55rem 0.8rem; background: rgba(21,32,48,0.8); border: 1px solid var(--border); border-radius: 5px; color: var(--text); font-family: 'DM Mono', 'Consolas', 'Courier New', monospace; font-size: 0.82rem; outline: none; width: 100%; }
-  .lab-input:focus { border-color: var(--accent); }
-  .lab-row { display: flex; gap: 0.5rem; }
-  .lab-btn { padding: 0.5rem 1rem; background: var(--accent); border: none; border-radius: 5px; color: #000; font-size: 0.78rem; font-weight: 600; cursor: pointer; white-space: nowrap; }
-  .lab-btn:hover { background: #00bde0; }
-  .lab-output {
-    margin-top: 0.7rem; padding: 0.8rem; background: #050a10; border: 1px solid var(--border);
-    border-radius: 5px; font-family: 'DM Mono', 'Consolas', 'Courier New', monospace; font-size: 0.75rem; color: var(--success);
-    max-height: 150px; overflow-y: auto; white-space: pre-wrap; word-break: break-all;
-    display: none;
-  }
-  .lab-output.show { display: block; }
-  .lab-output.error { color: var(--danger); }
+/* scrollbar */
+::-webkit-scrollbar { width:4px; height:4px; }
+::-webkit-scrollbar-track { background:transparent; }
+::-webkit-scrollbar-thumb { background:var(--border2); border-radius:2px; }
 
-  /* Post section */
-  .section-title { font-family: 'Syne', 'Segoe UI', system-ui, sans-serif; font-weight: 700; font-size: 1.1rem; margin-bottom: 1rem; }
-  .posts-list { display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 1rem; }
-  .post-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.2rem; }
-  .post-title { font-family: 'Syne', 'Segoe UI', system-ui, sans-serif; font-weight: 600; font-size: 0.9rem; margin-bottom: 0.3rem; }
-  .post-content { font-size: 0.82rem; color: var(--muted); }
-
-  .new-post-form { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1.2rem; display: flex; flex-direction: column; gap: 0.6rem; }
-  .new-post-form input, .new-post-form textarea { padding: 0.6rem 0.8rem; background: rgba(21,32,48,0.8); border: 1px solid var(--border); border-radius: 5px; color: var(--text); font-family: 'DM Sans', 'Segoe UI', system-ui, sans-serif, 'Segoe UI', system-ui, sans-serif; font-size: 0.85rem; outline: none; resize: vertical; }
-  .new-post-form textarea { min-height: 70px; }
-  .new-post-form input:focus, .new-post-form textarea:focus { border-color: var(--accent); }
-
-  .info-box { padding: 0.7rem 1rem; background: rgba(0,212,255,0.05); border: 1px solid rgba(0,212,255,0.1); border-radius: 6px; font-size: 0.78rem; color: var(--muted); font-family: 'DM Mono', 'Consolas', 'Courier New', monospace; line-height: 1.7; margin-bottom: 1.5rem; }
-  .info-box strong { color: var(--accent); }
+footer { border-top:1px solid var(--border); padding:14px 24px; display:flex; justify-content:space-between; align-items:center; margin-top:3rem; }
+.foot-credit { font-size:11px; color:var(--text3); font-family:var(--mono); }
+.foot-credit span { color:var(--accent); }
 </style>
 </head>
 <body>
 <nav>
-  <div class="logo">Nex<span>Corp</span> <span style="font-size:0.6rem;color:var(--muted);font-family:'DM Mono','Consolas','Courier New',monospace;font-weight:400"> / user portal</span></div>
+  <div>
+    <span class="nav-brand">Nex<span>Corp</span></span>
+    <span class="nav-brand-sub">/ security lab</span>
+  </div>
   <div class="nav-right">
-    <span id="userLabel">loading...</span>
-    <button class="btn btn-danger" onclick="logout()">Sign Out</button>
+    <div class="user-pill" id="userPill">loading...</div>
+    <button class="btn btn-red" onclick="showLogoutWarning()">Sign Out</button>
   </div>
 </nav>
 
 <main>
-  <div class="page-title">Security Lab — Exploit Playground</div>
-  <div class="page-sub">Intentionally vulnerable endpoints. Try the exploits below. The admin dashboard monitors every attempt in real-time.</div>
+  <div class="page-title">Exploit Playground</div>
+  <div class="page-sub">Intentionally vulnerable endpoints for security training. Every action is monitored in real-time by the admin dashboard.</div>
 
-  <div class="info-box">
+  <div class="info-banner">
     <strong>// Active vulnerabilities:</strong><br>
-    SQL Injection (login, search) · Stored XSS (posts) · Reflected XSS (/greet) · IDOR (user profiles) · Path Traversal (/file) · Command Injection (/ping) · Broken Access Control (/secrets)
+    SQL Injection (login, search) · Stored XSS (posts) · Reflected XSS (/api/greet) · IDOR (user profiles) · Path Traversal (/api/file) · Command Injection (/api/ping) · Broken Access Control (/api/secrets)
   </div>
 
-  <!-- Labs -->
   <div class="labs-grid">
 
-    <!-- SQL Injection -->
-    <div class="lab-card">
-      <div class="lab-header">
+    <div class="lab">
+      <div class="lab-head">
         <span class="lab-icon">💉</span>
         <span class="lab-title">SQL Injection — Search</span>
         <span class="lab-badge badge-critical">Critical</span>
       </div>
-      <div class="lab-desc">The search endpoint uses raw string concatenation. Try UNION-based injection to extract data from other tables.</div>
-      <div class="lab-form">
-        <div class="lab-row">
-          <input class="lab-input" id="sqliInput" placeholder="' UNION SELECT id,key,value FROM secrets--" value="">
-          <button class="lab-btn" onclick="runSQLi()">Execute</button>
-        </div>
-        <div class="lab-output" id="sqliOutput"></div>
+      <div class="lab-desc">The search endpoint concatenates raw strings. Use UNION SELECT to extract data from other tables including secrets and flags.</div>
+      <div class="lab-row">
+        <input class="lab-input" id="sqliIn" placeholder="' UNION SELECT id,key,value FROM secrets--" value="">
+        <button class="lab-run" onclick="runSQLi()">Run</button>
       </div>
+      <div class="lab-output" id="sqliOut"></div>
     </div>
 
-    <!-- Stored XSS -->
-    <div class="lab-card">
-      <div class="lab-header">
+    <div class="lab">
+      <div class="lab-head">
         <span class="lab-icon">📝</span>
         <span class="lab-title">Stored XSS — Posts</span>
         <span class="lab-badge badge-critical">Critical</span>
       </div>
-      <div class="lab-desc">Posts are stored without sanitization and rendered as raw HTML. Inject a script tag to trigger on page load.</div>
-      <div class="lab-form">
-        <input class="lab-input" id="xssTitle" placeholder="Post title" value="XSS Test">
-        <div class="lab-row">
-          <input class="lab-input" id="xssContent" placeholder='&lt;script&gt;alert("XSS!")&lt;/script&gt;' value='<img src=x onerror=alert("XSS!")>'>
-          <button class="lab-btn" onclick="runXSS()">Post</button>
-        </div>
-        <div class="lab-output" id="xssOutput"></div>
+      <div class="lab-desc">Posts are stored and rendered as raw HTML with no sanitization. Inject a script that fires every time the posts feed loads.</div>
+      <div>
+        <input class="lab-input" id="xssTitle" placeholder="Post title" value="XSS Demo" style="width:100%;margin-bottom:6px;">
       </div>
+      <div class="lab-row">
+        <input class="lab-input" id="xssContent" placeholder='<img src=x onerror=alert("XSS!")>' value='<img src=x onerror=alert("XSS stored!")>'>
+        <button class="lab-run" onclick="runXSS()">Post</button>
+      </div>
+      <div class="lab-output" id="xssOut"></div>
     </div>
 
-    <!-- Path Traversal -->
-    <div class="lab-card">
-      <div class="lab-header">
+    <div class="lab">
+      <div class="lab-head">
         <span class="lab-icon">📂</span>
         <span class="lab-title">Path Traversal</span>
         <span class="lab-badge badge-critical">Critical</span>
       </div>
-      <div class="lab-desc">The /file endpoint joins paths without sanitization. Try traversing to read server files.</div>
-      <div class="lab-form">
-        <div class="lab-row">
-          <input class="lab-input" id="pathInput" placeholder="../../../etc/passwd" value="../../../etc/passwd">
-          <button class="lab-btn" onclick="runPath()">Read</button>
-        </div>
-        <div class="lab-output" id="pathOutput"></div>
+      <div class="lab-desc">The /file endpoint joins paths without sanitization. Escape the web root using ../ sequences to read server files.</div>
+      <div class="lab-row">
+        <input class="lab-input" id="pathIn" placeholder="../../../etc/passwd" value="../../../etc/passwd">
+        <button class="lab-run" onclick="runPath()">Read</button>
       </div>
+      <div class="lab-output" id="pathOut"></div>
     </div>
 
-    <!-- Command Injection -->
-    <div class="lab-card">
-      <div class="lab-header">
+    <div class="lab">
+      <div class="lab-head">
         <span class="lab-icon">💻</span>
         <span class="lab-title">Command Injection — Ping</span>
         <span class="lab-badge badge-critical">Critical</span>
       </div>
-      <div class="lab-desc">The ping endpoint passes user input directly to exec(). Chain system commands with ; or |.</div>
-      <div class="lab-form">
-        <div class="lab-row">
-          <input class="lab-input" id="cmdInput" placeholder="127.0.0.1; whoami" value="127.0.0.1; id">
-          <button class="lab-btn" onclick="runCmd()">Run</button>
-        </div>
-        <div class="lab-output" id="cmdOutput"></div>
+      <div class="lab-desc">User input is passed directly to exec(). Chain system commands using semicolons, pipes, or backticks.</div>
+      <div class="lab-row">
+        <input class="lab-input" id="cmdIn" placeholder="127.0.0.1; id" value="127.0.0.1; id">
+        <button class="lab-run" onclick="runCmd()">Execute</button>
       </div>
+      <div class="lab-output" id="cmdOut"></div>
     </div>
 
-    <!-- IDOR -->
-    <div class="lab-card">
-      <div class="lab-header">
+    <div class="lab">
+      <div class="lab-head">
         <span class="lab-icon">🔓</span>
         <span class="lab-title">IDOR — User Enumeration</span>
         <span class="lab-badge badge-high">High</span>
       </div>
-      <div class="lab-desc">User profiles are accessible by ID with no ownership check. Enumerate all users by changing the ID.</div>
-      <div class="lab-form">
-        <div class="lab-row">
-          <input class="lab-input" id="idorInput" placeholder="User ID (1,2,3...)" value="1" type="number">
-          <button class="lab-btn" onclick="runIDOR()">Fetch</button>
-        </div>
-        <div class="lab-output" id="idorOutput"></div>
+      <div class="lab-desc">User profiles are accessible by numeric ID with no ownership check. Enumerate all users by incrementing the ID.</div>
+      <div class="lab-row">
+        <input class="lab-input" id="idorIn" placeholder="User ID" value="1" type="number">
+        <button class="lab-run" onclick="runIDOR()">Fetch</button>
       </div>
+      <div class="lab-output" id="idorOut"></div>
     </div>
 
-    <!-- Broken Access Control -->
-    <div class="lab-card">
-      <div class="lab-header">
+    <div class="lab">
+      <div class="lab-head">
         <span class="lab-icon">🗝️</span>
         <span class="lab-title">Broken Access Control</span>
         <span class="lab-badge badge-critical">Critical</span>
       </div>
-      <div class="lab-desc">The /secrets endpoint requires NO authentication. Access server secrets, API keys, and CTF flags directly.</div>
-      <div class="lab-form">
-        <button class="lab-btn" style="width:100%" onclick="runSecrets()">Dump /api/secrets</button>
-        <div class="lab-output" id="secretsOutput"></div>
-      </div>
+      <div class="lab-desc">The /secrets endpoint requires no authentication whatsoever. Access all server secrets, API keys, and CTF flags directly.</div>
+      <button class="lab-run" style="width:100%" onclick="runSecrets()">Dump /api/secrets</button>
+      <div class="lab-output" id="secretsOut"></div>
     </div>
 
   </div>
 
-  <!-- Posts (Stored XSS display) -->
-  <div class="section-title">Posts Feed <span style="font-size:0.7rem;color:var(--muted);font-weight:400">(rendered as raw HTML — stored XSS)</span></div>
-  <div class="posts-list" id="postsList"></div>
-
-  <div class="new-post-form">
-    <input id="newPostTitle" placeholder="Post title...">
-    <textarea id="newPostContent" placeholder="Content (HTML allowed — try injecting scripts)..."></textarea>
-    <button class="lab-btn" style="align-self:flex-start" onclick="submitPost()">Publish Post</button>
+  <!-- Posts feed (Stored XSS renders here) -->
+  <div class="section-title">
+    Posts Feed
+    <span class="section-sub">(rendered as raw innerHTML — stored XSS executes here)</span>
   </div>
-
+  <div class="posts-list" id="postsList"></div>
+  <div class="new-post">
+    <input id="newTitle" placeholder="Post title...">
+    <textarea id="newContent" placeholder="Content — HTML is allowed and rendered unsanitized..."></textarea>
+    <button class="lab-run" style="align-self:flex-start" onclick="submitPost()">Publish Post</button>
+  </div>
 </main>
 
+<footer>
+  <div style="display:flex;align-items:center;gap:14px;">
+    <div class="foot-credit">VulnLab · Built by <span>Junyu</span></div>
+    <a href="https://github.com/jjtjtyt6644/CyberAttacks-Simulation" target="_blank" title="GitHub: CyberAttacks-Simulation" style="display:flex;align-items:center;gap:5px;color:var(--text3);text-decoration:none;font-size:11px;font-family:var(--mono);padding:4px 9px;border:1px solid var(--border);border-radius:5px;transition:all 0.15s;" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text3)'">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+      jjtjtyt6644
+    </a>
+  </div>
+  <div style="font-size:11px;color:var(--red);font-family:var(--mono);">⚠ Training Environment Only</div>
+</footer>
+
 <script>
-// Auth check
 async function checkAuth() {
-  const res = await fetch('/api/me');
-  const data = await res.json();
-  if (!data.loggedIn) { window.location.href = '/login'; return; }
-  document.getElementById('userLabel').textContent = `${data.user.username} [${data.user.role}]`;
+  const r = await fetch('/api/me');
+  const d = await r.json();
+  if (!d.loggedIn) { window.location.href = '/login'; return; }
+  document.getElementById('userPill').textContent = `${d.user.username} [${d.user.role}]`;
+}
+async function logout() { await fetch('/api/logout',{method:'POST'}); window.location.href='/login'; }
+
+function showLogoutWarning() {
+  const m = document.getElementById('logoutModal');
+  m.style.display = 'flex';
+}
+function closeLogoutModal() {
+  const m = document.getElementById('logoutModal');
+  m.style.display = 'none';
 }
 
-async function logout() {
-  await fetch('/api/logout', { method: 'POST' });
-  window.location.href = '/login';
-}
-
-function showOutput(id, text, isError = false) {
-  const el = document.getElementById(id);
-  el.textContent = typeof text === 'object' ? JSON.stringify(text, null, 2) : text;
-  el.classList.add('show');
-  el.classList.toggle('error', isError);
+function out(id, text, err=false) {
+  const el=document.getElementById(id);
+  el.textContent = typeof text==='object' ? JSON.stringify(text,null,2) : text;
+  el.classList.add('show'); el.classList.toggle('err',err);
 }
 
 async function runSQLi() {
-  const q = document.getElementById('sqliInput').value;
-  try {
-    const res = await fetch(`/api/search?q=${encodeURIComponent(q)}`);
-    const data = await res.json();
-    showOutput('sqliOutput', data.error ? `ERROR: ${data.error}` : JSON.stringify(data, null, 2), !!data.error);
-  } catch(e) { showOutput('sqliOutput', e.message, true); }
+  const q=document.getElementById('sqliIn').value;
+  try { const r=await fetch(`/api/search?q=${encodeURIComponent(q)}`); const d=await r.json(); out('sqliOut',d.error?`ERROR: ${d.error}`:d,!!d.error); }
+  catch(e){out('sqliOut',e.message,true);}
 }
-
 async function runXSS() {
-  const title = document.getElementById('xssTitle').value;
-  const content = document.getElementById('xssContent').value;
-  try {
-    const res = await fetch('/api/posts', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ title, content }) });
-    const data = await res.json();
-    showOutput('xssOutput', data.success ? 'Posted! Scroll down to see posts rendered as raw HTML...' : JSON.stringify(data));
-    loadPosts();
-  } catch(e) { showOutput('xssOutput', e.message, true); }
+  const title=document.getElementById('xssTitle').value, content=document.getElementById('xssContent').value;
+  try { await fetch('/api/posts',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({title,content})}); out('xssOut','Posted! Scroll down to see it rendered...'); loadPosts(); }
+  catch(e){out('xssOut',e.message,true);}
 }
-
 async function runPath() {
-  const name = document.getElementById('pathInput').value;
-  try {
-    const res = await fetch(`/api/file?name=${encodeURIComponent(name)}`);
-    const data = await res.json();
-    showOutput('pathOutput', data.content || data.error, !!data.error);
-  } catch(e) { showOutput('pathOutput', e.message, true); }
+  const name=document.getElementById('pathIn').value;
+  try { const r=await fetch(`/api/file?name=${encodeURIComponent(name)}`); const d=await r.json(); out('pathOut',d.content||d.error,!!d.error); }
+  catch(e){out('pathOut',e.message,true);}
 }
-
 async function runCmd() {
-  const host = document.getElementById('cmdInput').value;
-  try {
-    const res = await fetch('/api/ping', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ host }) });
-    const data = await res.json();
-    showOutput('cmdOutput', `$ ${data.command}\n${data.output}`, data.error);
-  } catch(e) { showOutput('cmdOutput', e.message, true); }
+  const host=document.getElementById('cmdIn').value;
+  try { const r=await fetch('/api/ping',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({host})}); const d=await r.json(); out('cmdOut',`$ ${d.command}\n${d.output}`,d.error); }
+  catch(e){out('cmdOut',e.message,true);}
 }
-
 async function runIDOR() {
-  const id = document.getElementById('idorInput').value;
-  try {
-    const res = await fetch(`/api/user/${id}`);
-    const data = await res.json();
-    showOutput('idorOutput', JSON.stringify(data, null, 2), !!data.error);
-  } catch(e) { showOutput('idorOutput', e.message, true); }
+  const id=document.getElementById('idorIn').value;
+  try { const r=await fetch(`/api/user/${id}`); const d=await r.json(); out('idorOut',d,!!d.error); }
+  catch(e){out('idorOut',e.message,true);}
 }
-
 async function runSecrets() {
-  try {
-    const res = await fetch('/api/secrets');
-    const data = await res.json();
-    showOutput('secretsOutput', JSON.stringify(data, null, 2));
-  } catch(e) { showOutput('secretsOutput', e.message, true); }
+  try { const r=await fetch('/api/secrets'); out('secretsOut',await r.json()); }
+  catch(e){out('secretsOut',e.message,true);}
 }
 
 async function loadPosts() {
-  const res = await fetch('/api/posts');
-  const data = await res.json();
-  const list = document.getElementById('postsList');
-  list.innerHTML = data.posts.map(p => `
-    <div class="post-card">
-      <div class="post-title">${p.title}</div>
-      <div class="post-content">${p.content}</div>
-    </div>
-  `).join(''); // ⚠️ Raw innerHTML — stored XSS on purpose
+  const r=await fetch('/api/posts'); const d=await r.json();
+  document.getElementById('postsList').innerHTML=(d.posts||[]).map(p=>`
+    <div class="post"><div class="post-title">${p.title}</div><div class="post-content">${p.content}</div></div>`).join('');
+  // ⚠️ Raw innerHTML — stored XSS on purpose
 }
 
 async function submitPost() {
-  const title = document.getElementById('newPostTitle').value;
-  const content = document.getElementById('newPostContent').value;
-  await fetch('/api/posts', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ title, content }) });
-  document.getElementById('newPostTitle').value = '';
-  document.getElementById('newPostContent').value = '';
+  const title=document.getElementById('newTitle').value, content=document.getElementById('newContent').value;
+  await fetch('/api/posts',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({title,content})});
+  document.getElementById('newTitle').value=''; document.getElementById('newContent').value='';
   loadPosts();
 }
 
-checkAuth();
-loadPosts();
+checkAuth(); loadPosts();
 </script>
-</body>
-</html>
+<!-- LOGOUT WARNING MODAL -->
+<div id="logoutModal" style="display:none;position:fixed;inset:0;z-index:999;background:rgba(0,0,0,0.65);backdrop-filter:blur(6px);align-items:center;justify-content:center;">
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:28px;width:420px;max-width:92vw;box-shadow:0 25px 60px rgba(0,0,0,0.5);position:relative;">
+    <!-- Red top accent -->
+    <div style="position:absolute;top:0;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,rgba(244,63,94,0.6),transparent);border-radius:1px;"></div>
+
+    <!-- Icon + Title -->
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
+      <div style="width:40px;height:40px;border-radius:10px;background:rgba(244,63,94,0.1);border:1px solid rgba(244,63,94,0.25);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">⚠️</div>
+      <div>
+        <div style="font-size:15px;font-weight:700;letter-spacing:-0.2px;">Sign Out Warning</div>
+        <div style="font-size:11px;color:var(--text3);margin-top:1px;">Session will be terminated</div>
+      </div>
+    </div>
+
+    <!-- Message -->
+    <div style="background:rgba(244,63,94,0.06);border:1px solid rgba(244,63,94,0.18);border-radius:8px;padding:14px 16px;margin:16px 0;">
+      <div style="font-size:13px;color:var(--text);line-height:1.6;">
+        Signing out will also <strong style="color:var(--red);">terminate your SOC Command Centre session</strong>. You will need to re-authenticate at both the vulnerable site and the admin dashboard.
+      </div>
+    </div>
+
+    <div style="font-size:12px;color:var(--text3);margin-bottom:20px;display:flex;align-items:center;gap:6px;">
+      <span style="color:var(--accent);font-size:14px;">🛡</span>
+      Any active real-time alerts in the SOC dashboard will stop until you log back in.
+    </div>
+
+    <!-- Buttons -->
+    <div style="display:flex;gap:8px;justify-content:flex-end;">
+      <button onclick="closeLogoutModal()" style="padding:8px 18px;border-radius:7px;border:1px solid var(--border);background:transparent;color:var(--text2);font-family:var(--font);font-size:13px;font-weight:500;cursor:pointer;transition:all 0.15s;" onmouseover="this.style.background='var(--surface2)'" onmouseout="this.style.background='transparent'">
+        Cancel
+      </button>
+      <button onclick="logout()" style="padding:8px 18px;border-radius:7px;border:1px solid var(--red);background:var(--red);color:#fff;font-family:var(--font);font-size:13px;font-weight:600;cursor:pointer;transition:opacity 0.15s;" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
+        Sign Out Anyway
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+// Close modal on backdrop click
+document.getElementById('logoutModal').addEventListener('click', function(e) {
+  if (e.target === this) closeLogoutModal();
+});
+// Close on Escape
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeLogoutModal(); });
+</script>
+
+

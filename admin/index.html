@@ -688,6 +688,9 @@ input[type=range] { width: 100%; accent-color: var(--accent); cursor: pointer; }
       <div class="tnav" onclick="nav('ml')"><div class="tnav-dot"></div>ML Engine</div>
       <div class="tnav" onclick="nav('feed')"><div class="tnav-dot"></div>Live Feed</div>
       <div class="tnav" onclick="nav('settings')"><div class="tnav-dot"></div>Settings</div>
+      <div class="tnav" onclick="nav('heatmap')"><div class="tnav-dot"></div>Heatmap</div>
+      <div class="tnav" onclick="nav('export')"><div class="tnav-dot"></div>Export</div>
+      <div class="tnav" onclick="nav('simulate')"><div class="tnav-dot"></div>Simulate</div>
     </div>
     <div class="topbar-right">
       <div class="status-pill">
@@ -695,6 +698,10 @@ input[type=range] { width: 100%; accent-color: var(--accent); cursor: pointer; }
         <span id="wsLabel">Offline</span>
       </div>
       <div class="clock" id="clock">--:--:--</div>
+      <span style="font-size:10px;color:var(--text3);font-family:var(--mono);">Built by <span style="color:var(--accent);">Junyu</span></span>
+      <a href="https://github.com/jjtjtyt6644/CyberAttacks-Simulation" target="_blank" title="GitHub: CyberAttacks-Simulation" style="display:flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:6px;background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--text2);text-decoration:none;font-size:14px;transition:all 0.15s;" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text2)'">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+      </a>
       <button class="tb-action" onclick="doLogout()">Sign out</button>
     </div>
   </div>
@@ -724,6 +731,9 @@ input[type=range] { width: 100%; accent-color: var(--accent); cursor: pointer; }
         <div class="sb-label">Intelligence</div>
         <div class="sb-item" onclick="nav('ml')"><span class="sb-icon">🤖</span> ML Engine</div>
         <div class="sb-item" onclick="nav('settings')"><span class="sb-icon">⚙️</span> Settings</div>
+        <div class="sb-item" onclick="nav('heatmap')"><span class="sb-icon">🔥</span> Heatmap</div>
+        <div class="sb-item" onclick="nav('export')"><span class="sb-icon">📤</span> Export</div>
+        <div class="sb-item" onclick="nav('simulate')"><span class="sb-icon">🎯</span> Simulate</div>
       </div>
       <div style="flex:1"></div>
       <div class="sb-system">
@@ -1038,6 +1048,61 @@ input[type=range] { width: 100%; accent-color: var(--accent); cursor: pointer; }
               <tbody id="trainBody"></tbody>
             </table>
           </div>
+
+          <div class="card" style="grid-column:1/-1;">
+            <div class="card-header">
+              <div class="card-title">🌏 Timezone</div>
+              <span class="mono text-sm text-muted" id="tzOffsetDisplay">GMT+8</span>
+            </div>
+            <div class="card-body">
+              <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+                <div style="flex:1;min-width:280px;">
+                  <div class="inp-label">Display Timezone (all timestamps)</div>
+                  <select class="sel" id="tzSelect" style="width:100%;margin-top:6px;"></select>
+                </div>
+                <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:12px 16px;font-family:var(--mono);font-size:11px;color:var(--text2);min-width:200px;">
+                  <div style="color:var(--text3);margin-bottom:4px;font-size:10px;text-transform:uppercase;letter-spacing:0.5px;">Current Time</div>
+                  <div id="tzPreview" style="font-size:16px;color:var(--accent);font-weight:500;">--:--:--</div>
+                  <div id="tzPreviewDate" style="color:var(--text3);margin-top:2px;font-size:10px;"></div>
+                </div>
+              </div>
+              <p style="font-size:11px;color:var(--text3);margin-top:10px;">Default is GMT+8 (Asia/Singapore). Changes apply immediately to all timestamps in the dashboard and are saved in your browser.</p>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header"><div class="card-title">👤 Credits</div></div>
+            <div class="card-body">
+              <div class="setting-row">
+                <div class="setting-info">
+                  <div class="setting-name">Built by</div>
+                  <div class="setting-desc mono text-sm" style="color:var(--accent);">Junyu</div>
+                </div>
+                <a href="https://github.com/jjtjtyt6644/CyberAttacks-Simulation" target="_blank" class="btn btn-blue btn-sm" style="gap:6px;">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                  GitHub
+                </a>
+              </div>
+              <div class="setting-row">
+                <div class="setting-info">
+                  <div class="setting-name">Project</div>
+                  <div class="setting-desc mono text-sm">VulnLab — Security Training Platform v2.0</div>
+                </div>
+              </div>
+              <div class="setting-row">
+                <div class="setting-info">
+                  <div class="setting-name">Purpose</div>
+                  <div class="setting-desc">Intentionally vulnerable web app for CTF and security education. Includes SQL injection, XSS, path traversal, command injection, IDOR, and more — all monitored by an AI/ML threat detector.</div>
+                </div>
+              </div>
+              <div class="setting-row">
+                <div class="setting-info">
+                  <div class="setting-name">⚠ Warning</div>
+                  <div class="setting-desc" style="color:var(--red);">For local / isolated network use only. Never deploy on a public server.</div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -1165,6 +1230,168 @@ input[type=range] { width: 100%; accent-color: var(--accent); cursor: pointer; }
         </div>
       </div>
 
+
+      <!-- ═══ HEATMAP ═════════════════════════════════════════════ -->
+      <div class="panel" id="panel-heatmap">
+        <div class="page-title">Attack Heatmap</div>
+        <div class="page-sub">Visual breakdown of attack patterns across time and threat categories</div>
+
+        <div class="grid-2" style="margin-bottom:16px;">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">🕐 Hourly Attack Density (Last 7 Days)</div>
+              <button class="btn btn-sm" onclick="loadHeatmap()">↺ Refresh</button>
+            </div>
+            <div class="card-body">
+              <div style="display:grid;grid-template-columns:40px repeat(24,1fr);gap:2px;font-size:9px;font-family:var(--mono);" id="heatGrid">
+                <div style="color:var(--text3);text-align:right;padding-right:4px;">Loading...</div>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;margin-top:10px;font-size:10px;color:var(--text3);">
+                <span>Low</span>
+                <div style="display:flex;gap:2px;">
+                  <div style="width:12px;height:12px;background:var(--border);border-radius:2px;"></div>
+                  <div style="width:12px;height:12px;background:rgba(251,191,36,0.3);border-radius:2px;"></div>
+                  <div style="width:12px;height:12px;background:rgba(251,146,60,0.5);border-radius:2px;"></div>
+                  <div style="width:12px;height:12px;background:rgba(244,63,94,0.7);border-radius:2px;"></div>
+                  <div style="width:12px;height:12px;background:var(--red);border-radius:2px;"></div>
+                </div>
+                <span>High</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header"><div class="card-title">📊 Attack Type Distribution</div></div>
+            <div class="card-body">
+              <canvas id="typeCanvas" width="300" height="200" style="width:100%;height:auto;"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><div class="card-title">📈 Score Distribution</div></div>
+          <div class="card-body">
+            <div style="display:flex;align-items:flex-end;gap:4px;height:90px;" id="scoreHistogram"></div>
+            <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--text3);font-family:var(--mono);margin-top:4px;">
+              <span>0.0</span><span>0.1</span><span>0.2</span><span>0.3</span><span>0.4</span>
+              <span>0.5</span><span>0.6</span><span>0.7</span><span>0.8</span><span>0.9</span><span>1.0</span>
+            </div>
+            <div style="font-size:11px;color:var(--text3);margin-top:6px;">Threat score distribution across all logged events</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ EXPORT ═══════════════════════════════════════════════ -->
+      <div class="panel" id="panel-export">
+        <div class="page-title">Export Logs</div>
+        <div class="page-sub">Download threat events and training data in various formats</div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header"><div class="card-title">📋 Export Threat Events</div></div>
+            <div class="card-body">
+              <div class="inp-label">Format</div>
+              <select class="sel" id="expFormat" style="width:100%;margin-bottom:12px;">
+                <option value="json">JSON</option>
+                <option value="csv">CSV</option>
+                <option value="txt">Plain Text Log</option>
+              </select>
+              <div class="inp-label">Filter by Type</div>
+              <select class="sel" id="expType" style="width:100%;margin-bottom:12px;">
+                <option value="">All Types</option>
+                <option>SQL_INJECTION</option><option>XSS</option><option>PATH_TRAVERSAL</option>
+                <option>CMD_INJECTION</option><option>BRUTE_FORCE</option><option>ANOMALY</option>
+              </select>
+              <div class="inp-label">Min Score</div>
+              <select class="sel" id="expScore" style="width:100%;margin-bottom:16px;">
+                <option value="0">All scores</option>
+                <option value="0.55">≥ 0.55 (Alert)</option>
+                <option value="0.78">≥ 0.78 (High)</option>
+              </select>
+              <button class="btn btn-blue" style="width:100%;justify-content:center;" onclick="exportEvents()">⬇ Download Events</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header"><div class="card-title">🤖 Export Training Data</div></div>
+            <div class="card-body">
+              <div class="inp-label">Format</div>
+              <select class="sel" id="expTrFormat" style="width:100%;margin-bottom:12px;">
+                <option value="json">JSON</option>
+                <option value="csv">CSV</option>
+              </select>
+              <div class="inp-label">Label Filter</div>
+              <select class="sel" id="expTrLabel" style="width:100%;margin-bottom:16px;">
+                <option value="">All samples</option>
+                <option value="1">Threats only</option>
+                <option value="0">Benign only</option>
+              </select>
+              <button class="btn btn-blue" style="width:100%;justify-content:center;margin-bottom:8px;" onclick="exportTraining()">⬇ Download Training Data</button>
+              <button class="btn btn-blue" style="width:100%;justify-content:center;" onclick="exportModel()">⬇ Download ML Model (JSON)</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><div class="card-title">📄 Export Preview</div></div>
+          <div class="card-body" style="padding:0;">
+            <pre id="expPreview" style="background:var(--bg);padding:14px;font-family:var(--mono);font-size:11px;color:var(--text2);max-height:300px;overflow:auto;white-space:pre-wrap;word-break:break-all;margin:0;border-radius:0 0 8px 8px;">// Select options above and click Download to preview and export data...</pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ SIMULATE ═════════════════════════════════════════════ -->
+      <div class="panel" id="panel-simulate">
+        <div class="page-title">Attack Simulator</div>
+        <div class="page-sub">Fire test payloads at the vulnerable endpoints to verify detection is working</div>
+
+        <div class="card" style="border-color:rgba(244,63,94,0.3);">
+          <div class="card-header" style="background:rgba(244,63,94,0.04);">
+            <div>
+              <div class="card-title text-red">⚠ Simulation Mode</div>
+              <div class="card-sub">These fire real requests against the vulnerable app. All will be detected and logged.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header"><div class="card-title">🎯 Preset Attack Scenarios</div></div>
+            <div class="card-body" style="display:flex;flex-direction:column;gap:8px;" id="simPresets">
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header"><div class="card-title">✏️ Custom Payload</div></div>
+            <div class="card-body">
+              <div class="inp-label">Endpoint</div>
+              <select class="sel" id="simEndpoint" style="width:100%;margin-bottom:8px;">
+                <option value="/api/login">POST /api/login</option>
+                <option value="/api/search">GET /api/search</option>
+                <option value="/api/ping">POST /api/ping</option>
+                <option value="/api/file">GET /api/file</option>
+                <option value="/api/greet">GET /api/greet</option>
+              </select>
+              <div class="inp-label">Payload</div>
+              <textarea class="inp" id="simPayload" rows="3" style="width:100%;resize:vertical;margin-bottom:8px;" placeholder="Enter custom payload..."></textarea>
+              <div class="inp-label">Field / Parameter</div>
+              <input class="inp" id="simField" style="width:100%;margin-bottom:10px;" placeholder="username, q, host, name..." value="username">
+              <button class="btn btn-red" style="width:100%;justify-content:center;" onclick="runCustomSim()">🚀 Fire Payload</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">📋 Simulation Results</div>
+            <button class="btn btn-sm" onclick="document.getElementById('simLog').innerHTML=''">Clear</button>
+          </div>
+          <div style="background:var(--bg);border-radius:0 0 8px 8px;max-height:300px;overflow-y:auto;padding:10px;font-family:var(--mono);font-size:11px;line-height:1.8;" id="simLog">
+            <span style="color:var(--text3);">// Results appear here after running simulations...</span>
+          </div>
+        </div>
+      </div>
+
     </div><!-- /main -->
   </div><!-- /app-body -->
 </div><!-- /app -->
@@ -1220,8 +1447,58 @@ function toggleSetting(btn) {
   cfg[key] = btn.classList.contains('on');
 }
 
-// ── Clock ──────────────────────────────────────────────────────────────────────
-setInterval(()=>{ document.getElementById('clock').textContent = new Date().toLocaleTimeString(); }, 1000);
+// ── Timezone & Clock ──────────────────────────────────────────────────────────
+const TZ_KEY = 'soc_timezone';
+let currentTZ = localStorage.getItem(TZ_KEY) || 'Asia/Singapore';
+
+const TIMEZONES = [
+  {label:'GMT+8  — Singapore / KL / Beijing', value:'Asia/Singapore'},
+  {label:'GMT+8  — Hong Kong',   value:'Asia/Hong_Kong'},
+  {label:'GMT+8  — Taipei',      value:'Asia/Taipei'},
+  {label:'GMT+8  — Perth',       value:'Australia/Perth'},
+  {label:'GMT+9  — Tokyo / Seoul', value:'Asia/Tokyo'},
+  {label:'GMT+7  — Bangkok / Jakarta', value:'Asia/Bangkok'},
+  {label:'GMT+5:30 — India',     value:'Asia/Kolkata'},
+  {label:'GMT+0  — UTC / London', value:'Europe/London'},
+  {label:'GMT-5  — New York',    value:'America/New_York'},
+  {label:'GMT-8  — Los Angeles', value:'America/Los_Angeles'},
+  {label:'GMT+1  — Paris / Berlin', value:'Europe/Paris'},
+  {label:'GMT+10 — Sydney',      value:'Australia/Sydney'},
+];
+
+function tzOffset(tz){
+  const now=new Date();
+  const diff=(new Date(now.toLocaleString('en-US',{timeZone:tz}))-new Date(now.toLocaleString('en-US',{timeZone:'UTC'})))/3600000;
+  return (diff>=0?'+':'')+diff;
+}
+function fmtTime(d,tz){ return d.toLocaleTimeString('en-GB',{timeZone:tz,hour12:false}); }
+function fmtDate(d,tz){ return d.toLocaleString('en-GB',{timeZone:tz,day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}); }
+function fmtFull(d,tz){ return d.toLocaleString('en-GB',{timeZone:tz,day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}); }
+function fmtTs(ts){ return fmtDate(new Date(ts), currentTZ); }
+
+setInterval(()=>{
+  const el=document.getElementById('clock');
+  if(el) el.textContent = fmtTime(new Date(),currentTZ)+' GMT'+tzOffset(currentTZ);
+},1000);
+
+function applyTimezone(tz){
+  currentTZ=tz; localStorage.setItem(TZ_KEY,tz);
+  const off=document.getElementById('tzOffsetDisplay');
+  if(off) off.textContent='GMT'+tzOffset(tz);
+  if(curPanel==='overview') loadOverview();
+  if(curPanel==='alerts')   loadAlerts();
+  if(curPanel==='ips')      loadIPs();
+  toast('ok','Timezone → '+tz+' (GMT'+tzOffset(tz)+')');
+}
+
+function buildTZSelect(){
+  const sel=document.getElementById('tzSelect');
+  if(!sel) return;
+  sel.innerHTML=TIMEZONES.map(t=>'<option value="'+t.value+'"'+(t.value===currentTZ?' selected':'')+'>'+t.label+'</option>').join('');
+  sel.onchange=()=>applyTimezone(sel.value);
+  const off=document.getElementById('tzOffsetDisplay');
+  if(off) off.textContent='GMT'+tzOffset(currentTZ);
+}
 
 // ── Auth ───────────────────────────────────────────────────────────────────────
 async function doLogin() {
@@ -1271,6 +1548,15 @@ function initApp() {
   loadMLInfo();
   loadTrainData();
   setInterval(loadOverview, 30000);
+  // Timezone preview ticker
+  setInterval(()=>{
+    const p=document.getElementById('tzPreview');
+    const d=document.getElementById('tzPreviewDate');
+    const now=new Date();
+    if(p) p.textContent=fmtTime(now,currentTZ);
+    if(d) d.textContent=now.toLocaleDateString('en-GB',{timeZone:currentTZ,weekday:'short',day:'2-digit',month:'short',year:'numeric'});
+  },1000);
+  setTimeout(buildTZSelect, 100);
 }
 
 // ── Nav ────────────────────────────────────────────────────────────────────────
@@ -1280,14 +1566,17 @@ function nav(name) {
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   document.getElementById('panel-'+name).classList.add('active');
   document.querySelectorAll('.tnav, .sb-item').forEach(el=>el.classList.remove('active'));
-  document.querySelectorAll(`.tnav, .sb-item`).forEach(el=>{
-    if(el.getAttribute('onclick')?.includes(`'${name}'`)) el.classList.add('active');
+  document.querySelectorAll('.tnav, .sb-item').forEach(el=>{
+    if(el.getAttribute('onclick')?.includes("'"+name+"'")) el.classList.add('active');
   });
-  if(name==='alerts') { clearBadges(); loadAlerts(); }
-  if(name==='ips') loadIPs();
-  if(name==='users') loadUsers();
-  if(name==='ml') { loadMLInfo(); loadTrainData(); }
-  if(name==='overview') loadOverview();
+  if(name==='alerts')   { clearBadges(); loadAlerts(); }
+  if(name==='ips')        loadIPs();
+  if(name==='users')      loadUsers();
+  if(name==='ml')       { loadMLInfo(); loadTrainData(); }
+  if(name==='overview')   loadOverview();
+  if(name==='heatmap')    loadHeatmap();
+  if(name==='simulate')   buildSimPresets();
+  if(name==='settings')   buildTZSelect();
 }
 
 function clearBadges() {
@@ -1369,7 +1658,7 @@ function showToast(e) {
       <span class="toast-x" onclick="this.closest('.toast').remove()">✕</span>
     </div>
     <div class="toast-msg">${(e.payload||'no payload').substring(0,80)}</div>
-    <div class="toast-foot">${e.ip} → ${e.endpoint} | score: ${(e.threatScore||0).toFixed(3)} | <span class="toast-ban-link" onclick="openBanModal('${e.ip}')">Ban IP</span></div>
+    <div class="toast-foot">${e.ip} → ${e.endpoint} | score: ${(e.threatScore||0).toFixed(3)} | ${fmtTs(e.timestamp)} | <span class="toast-ban-link" onclick="openBanModal('${e.ip}')">Ban IP</span></div>
   `;
   document.getElementById('toasts').appendChild(t);
   setTimeout(()=>t.remove(), 10000);
@@ -1389,7 +1678,7 @@ function feed(type, msg) {
   feedCount++;
   document.getElementById('feedTotal').textContent = feedCount+' events';
   const el = document.getElementById('feedEl');
-  const time = new Date().toTimeString().substring(0,8);
+  const time = fmtTime(new Date(), currentTZ);
   const cls = {threat:'fc-threat',warn:'fc-warn',ok:'fc-ok',info:'fc-info',ban:'fc-ban'}[type]||'fc-info';
   const d = document.createElement('div');
   d.className='feed-entry';
@@ -1473,7 +1762,7 @@ async function loadOverview() {
       <div class="alert-body">
         <div class="alert-top">
           <span class="alert-type" style="color:${c.color}">${e.threat_type}</span>
-          <span class="alert-time">${new Date(e.timestamp).toLocaleTimeString()}</span>
+          <span class="alert-time">${fmtTs(e.timestamp)}</span>
         </div>
         <div class="alert-msg">${e.ip} → ${e.endpoint} — "${(e.payload||'').substring(0,50)}"</div>
       </div>
@@ -1507,7 +1796,7 @@ async function loadAlerts() {
     const tcol={SQL_INJECTION:'var(--red)',XSS:'var(--orange)',PATH_TRAVERSAL:'var(--yellow)',CMD_INJECTION:'var(--purple)',BRUTE_FORCE:'var(--accent)',ANOMALY:'var(--text3)'}[e.threat_type]||'var(--text3)';
     return `<tr class="${e.acknowledged?'':'alert-row'}">
       <td class="mono text-muted">#${e.id}</td>
-      <td class="mono text-muted" style="white-space:nowrap">${new Date(e.timestamp).toLocaleTimeString()}</td>
+      <td class="mono text-muted" style="white-space:nowrap">${fmtTs(e.timestamp)}</td>
       <td>
         <div class="flex items-center gap-6">
           <span class="mono text-sm">${e.ip}</span>
@@ -1578,7 +1867,7 @@ async function loadIPs() {
     <tr>
       <td class="mono">${b.ip}</td>
       <td class="text-muted text-sm">${b.reason||'No reason'}</td>
-      <td class="mono text-muted text-sm">${new Date(b.banned_at).toLocaleString()}</td>
+      <td class="mono text-muted text-sm">${fmtFull(new Date(b.banned_at),currentTZ)}</td>
       <td><button class="btn btn-green btn-sm" onclick="unbanIP('${b.ip}')">✓ Unban</button></td>
     </tr>`).join('')||`<tr><td colspan="4"><div class="empty"><div class="empty-icon">✅</div><div class="empty-text">No banned IPs</div></div></td></tr>`;
 }
@@ -1611,8 +1900,8 @@ function renderIPs(ips) {
         </div>
       </td>
       <td>${types.map(t=>`<span class="badge badge-gray" style="margin-right:2px;">${t}</span>`).join('')||'—'}</td>
-      <td class="mono text-muted text-sm">${ip.first_seen?new Date(ip.first_seen).toLocaleDateString():'—'}</td>
-      <td class="mono text-muted text-sm">${ip.last_seen?new Date(ip.last_seen).toLocaleTimeString():'—'}</td>
+      <td class="mono text-muted text-sm">${ip.first_seen?fmtDate(new Date(ip.first_seen),currentTZ):'—'}</td>
+      <td class="mono text-muted text-sm">${ip.last_seen?fmtTs(ip.last_seen):'—'}</td>
       <td>${ip.banned?'<span class="badge badge-red">🚫 Banned</span>':'<span class="badge badge-green">✓ Active</span>'}</td>
       <td>
         <div class="flex gap-6">
@@ -1685,7 +1974,7 @@ async function loadUsers() {
       </td>
       <td class="mono text-muted text-sm">${u.email||'—'}</td>
       <td><span class="badge ${isAdmin?'badge-red':'badge-purple'}">${u.role}</span></td>
-      <td class="mono text-muted text-sm">${u.created_at?new Date(u.created_at).toLocaleDateString():'—'}</td>
+      <td class="mono text-muted text-sm">${u.created_at?fmtDate(new Date(u.created_at),currentTZ):'—'}</td>
       <td><span class="text-muted text-sm">—</span></td>
       <td>
         ${!isAdmin
@@ -1725,7 +2014,7 @@ async function loadMLInfo() {
 
   document.getElementById('mlInfo').innerHTML=[
     ['Version',`v${d.version}`],
-    ['Trained',new Date(d.trained_at).toLocaleString()],
+    ['Trained',fmtFull(new Date(d.trained_at),currentTZ)],
     ['Samples',d.sample_count],
     ['Alert Threshold',d.thresholds?.alert],
     ['High Threshold',d.thresholds?.high],
@@ -1784,7 +2073,7 @@ async function loadTrainData() {
       <td><span class="badge ${r.label?'badge-red':'badge-green'}">${r.label?'🔴 THREAT':'🟢 BENIGN'}</span></td>
       <td class="mono text-sm">${r.threat_type||'—'}</td>
       <td class="mono text-muted text-sm">${r.source}</td>
-      <td class="mono text-muted text-sm">${new Date(r.created_at).toLocaleDateString()}</td>
+      <td class="mono text-muted text-sm">${fmtDate(new Date(r.created_at),currentTZ)}</td>
       <td class="mono text-muted text-sm truncate" style="max-width:250px;">${(r.features||'').substring(0,80)}</td>
     </tr>`).join('')||`<tr><td colspan="6"><div class="empty"><div class="empty-icon">📭</div><div class="empty-text">No training data yet. Label alerts above.</div></div></td></tr>`;
 }
@@ -1793,6 +2082,264 @@ async function clearTraining() {
   if(!confirm('Delete all training data?')) return;
   toast('warn','Clear training data is not yet implemented — delete manually from DB.');
 }
+
+
+// ── Heatmap ────────────────────────────────────────────────────────────────────
+async function loadHeatmap() {
+  const data = await api('GET','/api/admin/threats?limit=5000');
+  const events = data.events||[];
+
+  // Build hourly grid (day of week x hour)
+  const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const grid = Array.from({length:7},()=>new Array(24).fill(0));
+  const scoresBuckets = new Array(10).fill(0);
+
+  events.forEach(e=>{
+    const d=new Date(e.timestamp);
+    const dow=d.getDay(), hr=d.getHours();
+    grid[dow][hr]++;
+    const bucket=Math.min(Math.floor(parseFloat(e.threat_score)*10),9);
+    scoresBuckets[bucket]++;
+  });
+
+  const maxVal = Math.max(...grid.flat(), 1);
+
+  // Hour labels row
+  let html = '<div style="color:var(--text3);text-align:right;padding-right:4px;padding-top:2px;"></div>';
+  for(let h=0;h<24;h++) html+=`<div style="color:var(--text3);text-align:center;">${h}</div>`;
+
+  // Data rows
+  for(let d=0;d<7;d++){
+    html+=`<div style="color:var(--text3);text-align:right;padding-right:4px;display:flex;align-items:center;justify-content:flex-end;">${days[d]}</div>`;
+    for(let h=0;h<24;h++){
+      const v=grid[d][h], pct=v/maxVal;
+      let bg='var(--border)';
+      if(pct>0.75) bg='var(--red)';
+      else if(pct>0.5) bg='rgba(244,63,94,0.7)';
+      else if(pct>0.25) bg='rgba(251,146,60,0.5)';
+      else if(pct>0) bg='rgba(251,191,36,0.3)';
+      html+=`<div title="${days[d]} ${h}:00 — ${v} events" style="background:${bg};border-radius:2px;height:14px;cursor:pointer;transition:opacity 0.15s;" onmouseover="this.style.opacity=0.7" onmouseout="this.style.opacity=1"></div>`;
+    }
+  }
+  document.getElementById('heatGrid').innerHTML = html;
+
+  // Score histogram
+  const maxB = Math.max(...scoresBuckets,1);
+  document.getElementById('scoreHistogram').innerHTML = scoresBuckets.map((v,i)=>{
+    const pct = Math.max(Math.round(v/maxB*100),v>0?3:0);
+    const col = i>=8?'var(--red)':i>=5?'var(--yellow)':'var(--accent)';
+    return `<div style="flex:1;background:${col};height:${pct}%;border-radius:3px 3px 0 0;min-height:${v>0?3:0}px;opacity:0.8;cursor:default;" title="${(i*10)}–${(i+1)*10}% — ${v} events"></div>`;
+  }).join('');
+
+  // Type pie on canvas
+  const typeMap={};
+  events.forEach(e=>{ typeMap[e.threat_type]=(typeMap[e.threat_type]||0)+1; });
+  drawTypePie(typeMap);
+}
+
+function drawTypePie(typeMap) {
+  const canvas=document.getElementById('typeCanvas');
+  if(!canvas) return;
+  const ctx=canvas.getContext('2d');
+  const W=canvas.width, H=canvas.height;
+  ctx.clearRect(0,0,W,H);
+  const total=Object.values(typeMap).reduce((a,b)=>a+b,0)||1;
+  const colors={'SQL_INJECTION':'#f43f5e','XSS':'#fb923c','PATH_TRAVERSAL':'#fbbf24','CMD_INJECTION':'#818cf8','BRUTE_FORCE':'#38bdf8','SSTI':'#34d399','ANOMALY':'#475569'};
+  const cx=W*0.35, cy=H/2, r=Math.min(cx,cy)*0.85;
+  let angle=-Math.PI/2;
+  const entries=Object.entries(typeMap).sort((a,b)=>b[1]-a[1]);
+  entries.forEach(([type,count])=>{
+    const slice=(count/total)*Math.PI*2;
+    ctx.beginPath(); ctx.moveTo(cx,cy);
+    ctx.arc(cx,cy,r,angle,angle+slice);
+    ctx.closePath();
+    ctx.fillStyle=colors[type]||'#475569';
+    ctx.fill();
+    ctx.strokeStyle='#07090e'; ctx.lineWidth=2; ctx.stroke();
+    angle+=slice;
+  });
+  // Donut hole
+  ctx.beginPath(); ctx.arc(cx,cy,r*0.5,0,Math.PI*2);
+  ctx.fillStyle='#07090e'; ctx.fill();
+  ctx.fillStyle='#e2e8f0'; ctx.font='bold 11px Inter,sans-serif';
+  ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.fillText(Object.values(typeMap).reduce((a,b)=>a+b,0)+'', cx, cy-7);
+  ctx.fillStyle='#475569'; ctx.font='9px Inter,sans-serif';
+  ctx.fillText('events', cx, cy+7);
+
+  // Legend
+  let ly=14;
+  entries.slice(0,7).forEach(([type,count])=>{
+    const x=W*0.72;
+    ctx.fillStyle=colors[type]||'#475569';
+    ctx.fillRect(x,ly-6,10,10);
+    ctx.fillStyle='#94a3b8'; ctx.font='10px Inter,sans-serif';
+    ctx.textAlign='left'; ctx.textBaseline='middle';
+    ctx.fillText(type.replace('_',' ').toLowerCase()+' ('+count+')', x+14, ly);
+    ly+=18;
+  });
+}
+
+// ── Export ─────────────────────────────────────────────────────────────────────
+async function exportEvents() {
+  const fmt=document.getElementById('expFormat').value;
+  const type=document.getElementById('expType').value;
+  const minScore=parseFloat(document.getElementById('expScore').value||0);
+  let url='/api/admin/threats?limit=9999';
+  if(type) url+=`&type=${type}`;
+  if(minScore>0) url+=`&minScore=${minScore}`;
+  const data=await api('GET',url);
+  const events=data.events||[];
+  let output='', filename='', mime='';
+
+  if(fmt==='json'){
+    output=JSON.stringify(events,null,2);
+    filename=`vuln-lab-threats-${Date.now()}.json`; mime='application/json';
+  } else if(fmt==='csv'){
+    const h='id,timestamp,ip,user_agent,endpoint,method,threat_type,threat_score,payload';
+    const rows=events.map(e=>[e.id,fmtFull(new Date(e.timestamp),currentTZ),e.ip,`"${(e.user_agent||'').replace(/"/g,'""')}"`,e.endpoint,e.method,e.threat_type,e.threat_score,`"${(e.payload||'').replace(/"/g,'""').substring(0,200)}"`].join(','));
+    output=[h,...rows].join('\n');
+    filename=`vuln-lab-threats-${Date.now()}.csv`; mime='text/csv';
+  } else {
+    output=events.map(e=>`[${fmtFull(new Date(e.timestamp),currentTZ)}] ${e.threat_type} | ${e.ip} → ${e.endpoint} | score:${e.threat_score} | ${(e.payload||'').substring(0,100)}`).join('\n');
+    filename=`vuln-lab-threats-${Date.now()}.txt`; mime='text/plain';
+  }
+
+  document.getElementById('expPreview').textContent = output.substring(0,2000)+(output.length>2000?'\n... (truncated for preview)':'');
+  downloadFile(output, filename, mime);
+  toast('ok',`Downloaded ${events.length} events as ${fmt.toUpperCase()}`);
+}
+
+async function exportTraining() {
+  const fmt=document.getElementById('expTrFormat').value;
+  const lbl=document.getElementById('expTrLabel').value;
+  const data=await api('GET','/api/admin/ml/training-data');
+  let rows=data.data||[];
+  if(lbl!=='') rows=rows.filter(r=>String(r.label)===lbl);
+  let output='', filename='', mime='';
+  if(fmt==='json'){
+    output=JSON.stringify(rows,null,2);
+    filename=`vuln-lab-training-${Date.now()}.json`; mime='application/json';
+  } else {
+    const h='id,label,threat_type,source,created_at,features';
+    const csvRows=rows.map(r=>[r.id,r.label,r.threat_type,r.source,r.created_at,`"${r.features.replace(/"/g,'""')}"`].join(','));
+    output=[h,...csvRows].join('\n');
+    filename=`vuln-lab-training-${Date.now()}.csv`; mime='text/csv';
+  }
+  document.getElementById('expPreview').textContent=output.substring(0,2000);
+  downloadFile(output,filename,mime);
+  toast('ok',`Downloaded ${rows.length} training samples`);
+}
+
+async function exportModel() {
+  const data=await api('GET','/api/admin/ml/info');
+  const output=JSON.stringify(data,null,2);
+  document.getElementById('expPreview').textContent=output;
+  downloadFile(output,`vuln-lab-model-v${data.version}.json`,'application/json');
+  toast('ok','ML model exported');
+}
+
+function downloadFile(content, filename, mime) {
+  const blob=new Blob([content],{type:mime});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url; a.download=filename;
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a); URL.revokeObjectURL(url);
+}
+
+// ── Simulate ───────────────────────────────────────────────────────────────────
+const SIM_PRESETS = [
+  { label:'SQL Login Bypass',      icon:'💉', type:'SQL_INJECTION',
+    endpoint:'/api/login', method:'POST',  field:'username', payload:"admin' --" },
+  { label:'SQL UNION Extract',     icon:'💉', type:'SQL_INJECTION',
+    endpoint:'/api/search', method:'GET',  field:'q', payload:"' UNION SELECT id,key,value FROM secrets--" },
+  { label:'Stored XSS',            icon:'📝', type:'XSS',
+    endpoint:'/api/posts', method:'POST',  field:'content', payload:'<scr'+'ipt>alert("XSS")<'+'/script>' },
+  { label:'Reflected XSS',         icon:'🪞', type:'XSS',
+    endpoint:'/api/greet', method:'GET',   field:'name', payload:'<img src=x onerror=alert(1)>' },
+  { label:'Path Traversal',        icon:'📂', type:'PATH_TRAVERSAL',
+    endpoint:'/api/file',  method:'GET',   field:'name', payload:'../../../etc/passwd' },
+  { label:'Command Injection',     icon:'💻', type:'CMD_INJECTION',
+    endpoint:'/api/ping',  method:'POST',  field:'host', payload:'127.0.0.1; id' },
+  { label:'Brute Force (x5)',      icon:'🔨', type:'BRUTE_FORCE',
+    endpoint:'/api/login', method:'POST',  field:'username', payload:'admin', repeat:5 },
+  { label:'SSTI Attempt',          icon:'🧩', type:'SSTI',
+    endpoint:'/api/search', method:'GET',  field:'q', payload:'{{7*7}}' },
+];
+
+function buildSimPresets(){
+  const container=document.getElementById('simPresets');
+  if(!container) return;
+  container.innerHTML=SIM_PRESETS.map((p,i)=>`
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:var(--surface2);border:1px solid var(--border);border-radius:6px;">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span style="font-size:16px;">${p.icon}</span>
+        <div>
+          <div style="font-size:12px;font-weight:600;">${p.label}</div>
+          <div style="font-size:10px;color:var(--text3);font-family:var(--mono);">${p.method} ${p.endpoint}</div>
+        </div>
+      </div>
+      <button class="btn btn-red btn-sm" onclick="runPreset(${i})">▶ Run</button>
+    </div>`).join('');
+}
+
+function simLog(msg, col='var(--text2)'){
+  const el=document.getElementById('simLog');
+  const time=fmtTime(new Date(),currentTZ);
+  const d=document.createElement('div');
+  d.style.cssText=`color:${col};border-bottom:1px solid rgba(30,46,62,0.4);padding:2px 0;`;
+  d.textContent=`[${time}] ${msg}`;
+  el.insertBefore(d,el.firstChild);
+}
+
+async function runPreset(idx){
+  const p=SIM_PRESETS[idx];
+  const times=p.repeat||1;
+  for(let i=0;i<times;i++){
+    simLog(`→ Firing: ${p.label} (${p.method} ${p.endpoint}) payload="${p.payload.substring(0,40)}"`, 'var(--yellow)');
+    try {
+      let res;
+      if(p.method==='POST'){
+        const body={[p.field]:p.payload};
+        if(p.field==='content') body.title='SimTest';
+        res=await fetch(p.endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+      } else {
+        res=await fetch(`${p.endpoint}?${p.field}=${encodeURIComponent(p.payload)}`);
+      }
+      const d=await res.json().catch(()=>({}));
+      simLog(`✓ Response ${res.status} — ${JSON.stringify(d).substring(0,80)}`, 'var(--green)');
+    } catch(e){ simLog(`✗ Error: ${e.message}`, 'var(--red)'); }
+    if(times>1) await new Promise(r=>setTimeout(r,300));
+  }
+  simLog(`★ Check Alerts tab — detection should have fired`, 'var(--accent)');
+  toast('ok','Simulation complete — check Alerts');
+}
+
+async function runCustomSim(){
+  const endpoint=document.getElementById('simEndpoint').value;
+  const payload=document.getElementById('simPayload').value.trim();
+  const field=document.getElementById('simField').value.trim()||'input';
+  if(!payload){toast('warn','Enter a payload');return;}
+  const isPost=['POST'].includes(document.querySelector('#simEndpoint option:checked')?.textContent.split(' ')[0]);
+  simLog(`→ Custom: ${isPost?'POST':'GET'} ${endpoint} ${field}="${payload.substring(0,40)}"`, 'var(--yellow)');
+  try {
+    let res;
+    if(endpoint==='/api/login'||endpoint==='/api/ping'||endpoint==='/api/posts'){
+      const body={[field]:payload}; if(endpoint==='/api/posts') body.title='Custom';
+      res=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+    } else {
+      res=await fetch(`${endpoint}?${field}=${encodeURIComponent(payload)}`);
+    }
+    const d=await res.json().catch(()=>({}));
+    simLog(`✓ Response ${res.status}: ${JSON.stringify(d).substring(0,100)}`, 'var(--green)');
+  } catch(e){ simLog(`✗ ${e.message}`, 'var(--red)'); }
+  simLog('★ Check Alerts for detection result', 'var(--accent)');
+}
+
+// Build presets on load
+setTimeout(buildSimPresets, 200);
+
 
 // ── Modal ──────────────────────────────────────────────────────────────────────
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
