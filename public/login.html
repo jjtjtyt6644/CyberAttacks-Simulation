@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NexCorp — Sign In</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #060a0f;
+    --panel: #0a1119;
+    --border: #162030;
+    --accent: #00d4ff;
+    --danger: #ff3366;
+    --warn: #ffaa00;
+    --success: #00e676;
+    --text: #dde4f0;
+    --muted: #566a8a;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', 'Segoe UI', system-ui, sans-serif, 'Segoe UI', system-ui, sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    display: flex;
+    overflow: hidden;
+  }
+
+  /* Left panel — decorative */
+  .left-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 4rem;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #060a0f 0%, #0a1525 100%);
+  }
+
+  .left-panel::before {
+    content: '';
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(0,212,255,0.06), transparent 60%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: breathe 6s ease-in-out infinite;
+  }
+
+  @keyframes breathe {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); }
+    50% { transform: translate(-50%, -50%) scale(1.15); }
+  }
+
+  /* Hex grid bg */
+  .hex-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,212,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,255,0.025) 1px, transparent 1px);
+    background-size: 30px 30px;
+  }
+
+  .left-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .logo {
+    font-family: 'Syne', 'Segoe UI', system-ui, sans-serif;
+    font-weight: 800;
+    font-size: 1.6rem;
+    color: var(--accent);
+    margin-bottom: 4rem;
+    letter-spacing: -0.02em;
+  }
+
+  .logo span { color: var(--text); }
+
+  .left-content h2 {
+    font-family: 'Syne', 'Segoe UI', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 2.5rem;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+  }
+
+  .left-content p {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.7;
+    max-width: 340px;
+    margin-bottom: 3rem;
+  }
+
+  /* Live threat meter */
+  .threat-meter {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.2rem 1.5rem;
+    background: rgba(10,17,25,0.7);
+    backdrop-filter: blur(10px);
+    max-width: 340px;
+  }
+
+  .meter-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+
+  .meter-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--success);
+    animation: blink 1.5s ease-in-out infinite;
+  }
+
+  .dot.warn { background: var(--warn); }
+  .dot.danger { background: var(--danger); animation: blink 0.5s ease-in-out infinite; }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.2; }
+  }
+
+  .threat-score-display {
+    font-family: 'DM Mono', 'Consolas', 'Courier New', monospace;
+    font-size: 2rem;
+    font-weight: 500;
+    color: var(--success);
+    transition: color 0.3s;
+  }
+
+  .threat-bar-track {
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    margin-bottom: 0.8rem;
+    overflow: hidden;
+  }
+
+  .threat-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--success), var(--accent));
+    border-radius: 2px;
+    transition: width 0.5s ease, background 0.3s;
+  }
+
+  .threat-signals {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .signal-chip {
+    padding: 0.2rem 0.6rem;
+    border-radius: 3px;
+    font-size: 0.65rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: rgba(0,212,255,0.08);
+    border: 1px solid rgba(0,212,255,0.15);
+    color: var(--accent);
+    display: none;
+  }
+
+  .signal-chip.active { display: inline-flex; }
+  .signal-chip.danger-chip {
+    background: rgba(255,51,102,0.1);
+    border-color: rgba(255,51,102,0.2);
+    color: var(--danger);
+  }
+
+  /* Right panel — form */
+  .right-panel {
+    width: 480px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 3rem;
+    background: var(--panel);
+    border-left: 1px solid var(--border);
+    position: relative;
+  }
+
+  .form-title {
+    font-family: 'Syne', 'Segoe UI', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 1.6rem;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.4rem;
+  }
+
+  .form-sub {
+    color: var(--muted);
+    font-size: 0.85rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .form-group {
+    margin-bottom: 1.2rem;
+    position: relative;
+  }
+
+  label {
+    display: block;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+
+  input {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    background: rgba(22,32,48,0.6);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    font-family: 'DM Mono', 'Consolas', 'Courier New', monospace;
+    font-size: 0.88rem;
+    outline: none;
+    transition: all 0.2s;
+  }
+
+  input:focus {
+    border-color: var(--accent);
+    background: rgba(0,212,255,0.04);
+    box-shadow: 0 0 0 3px rgba(0,212,255,0.07);
+  }
+
+  input.threat-input {
+    border-color: rgba(255,51,102,0.5);
+    background: rgba(255,51,102,0.04);
+    box-shadow: 0 0 0 3px rgba(255,51,102,0.07);
+  }
+
+  /* Live analysis badge */
+  .input-analysis {
+    position: absolute;
+    right: 0.8rem;
+    top: 50%;
+    transform: translateY(30%);
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    font-family: 'DM Mono', 'Consolas', 'Courier New', monospace;
+    transition: color 0.2s;
+  }
+
+  .input-analysis.detecting { color: var(--warn); }
+  .input-analysis.threat { color: var(--danger); }
+
+  /* Alert box */
+  .alert-box {
+    padding: 0.9rem 1.1rem;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    margin-bottom: 1.2rem;
+    display: none;
+    align-items: flex-start;
+    gap: 0.7rem;
+    line-height: 1.5;
+    border: 1px solid;
+  }
+
+  .alert-box.show { display: flex; }
+  .alert-box.error { background: rgba(255,51,102,0.08); border-color: rgba(255,51,102,0.2); color: #ff6b8a; }
+  .alert-box.warning { background: rgba(255,170,0,0.08); border-color: rgba(255,170,0,0.2); color: #ffcc44; }
+  .alert-box.info { background: rgba(0,212,255,0.08); border-color: rgba(0,212,255,0.2); color: var(--accent); }
+  .alert-box.success { background: rgba(0,230,118,0.08); border-color: rgba(0,230,118,0.2); color: var(--success); }
+
+  .submit-btn {
+    width: 100%;
+    padding: 1rem;
+    background: var(--accent);
+    border: none;
+    border-radius: 6px;
+    color: #000;
+    font-family: 'Syne', 'Segoe UI', system-ui, sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    letter-spacing: 0.05em;
+    transition: all 0.2s;
+    margin-top: 0.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .submit-btn:hover { background: #00bde0; }
+  .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  .submit-btn.loading { color: transparent; }
+
+  .submit-btn.loading::after {
+    content: '';
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 2px solid rgba(0,0,0,0.3);
+    border-top-color: #000;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+  }
+
+  @keyframes spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+
+  .form-footer {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  .form-footer a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  /* AI detection overlay animation */
+  .scan-line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    top: 0;
+    opacity: 0;
+    transition: opacity 0.3s;
+    animation: scanMove 2s linear infinite;
+  }
+
+  .scan-line.active { opacity: 1; }
+
+  @keyframes scanMove {
+    0% { top: 0; }
+    100% { top: 100%; }
+  }
+
+  /* Hint hints */
+  .hints-panel {
+    position: absolute;
+    bottom: 2rem;
+    left: 3rem;
+    right: 3rem;
+  }
+
+  .hint {
+    font-size: 0.7rem;
+    color: rgba(86,106,138,0.5);
+    font-family: 'DM Mono', 'Consolas', 'Courier New', monospace;
+    line-height: 1.8;
+  }
+</style>
+</head>
+<body>
+
+<!-- Left decorative panel -->
+<div class="left-panel">
+  <div class="hex-grid"></div>
+  <div class="left-content">
+    <div class="logo">Nex<span>Corp</span></div>
+    <h2>Secure<br>Access Portal</h2>
+    <p>Enterprise data infrastructure management. Authorized personnel only. All access attempts are monitored and logged.</p>
+
+    <!-- Live AI threat meter -->
+    <div class="threat-meter">
+      <div class="meter-header">
+        <div class="meter-label">
+          <div class="dot" id="dotIndicator"></div>
+          AI Threat Detector
+        </div>
+        <span id="threatScoreDisplay" class="threat-score-display">0.00</span>
+      </div>
+      <div class="threat-bar-track">
+        <div class="threat-bar-fill" id="threatBarFill"></div>
+      </div>
+      <div class="threat-signals" id="signalChips">
+        <span class="signal-chip danger-chip" id="chip-sql">SQL Injection</span>
+        <span class="signal-chip danger-chip" id="chip-xss">XSS</span>
+        <span class="signal-chip danger-chip" id="chip-path">Path Traversal</span>
+        <span class="signal-chip danger-chip" id="chip-cmd">Cmd Injection</span>
+        <span class="signal-chip danger-chip" id="chip-brute">Brute Force</span>
+        <span class="signal-chip" id="chip-ok">✓ Clean Input</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Right form panel -->
+<div class="right-panel">
+  <div class="scan-line" id="scanLine"></div>
+
+  <div class="form-title">Welcome back</div>
+  <div class="form-sub">Sign in to your NexCorp account</div>
+
+  <div class="alert-box" id="alertBox">
+    <span id="alertIcon">⚠</span>
+    <span id="alertMsg"></span>
+  </div>
+
+  <form id="loginForm" autocomplete="off">
+    <div class="form-group">
+      <label>Username</label>
+      <input type="text" id="username" name="username" placeholder="username" autocomplete="off" spellcheck="false">
+      <span class="input-analysis" id="usernameAnalysis"></span>
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="password" name="password" placeholder="••••••••" autocomplete="off">
+      <span class="input-analysis" id="passwordAnalysis"></span>
+    </div>
+
+    <button type="submit" class="submit-btn" id="submitBtn">Sign In</button>
+  </form>
+
+  <div class="form-footer">
+    <a href="/">← Back to homepage</a>
+    &nbsp;·&nbsp;
+    <a href="/admin">Admin Panel</a>
+  </div>
+
+  <div class="hints-panel">
+    <div class="hint">// Training hints:</div>
+    <div class="hint">// Try: admin' -- (SQL injection)</div>
+    <div class="hint">// Try: &lt;script&gt;alert(1)&lt;/script&gt;</div>
+    <div class="hint">// Default users: admin/password123, alice/alice123</div>
+  </div>
+</div>
+
+<script>
+// ─── Client-side AI signal analysis (mirrors server ML) ────────────────────
+const signals = {
+  sql: /('|--|#|union\s+select|or\s+'|and\s+'|select\s+\*|drop\s+table|\bOR\b\s+\w+=\w+)/i,
+  xss: /(<script|javascript:|onerror=|onload=|<img|<svg|alert\()/i,
+  path: /(\.\.\/|\.\.\\|%2e%2e|\/etc\/)/i,
+  cmd: /([;|`]|&&|\$\()/,
+  special: (s) => (s.match(/[<>'";\-\(\)\/\\\{\}]/g) || []).length > 5
+};
+
+let loginAttempts = 0;
+let lastLoginTime = 0;
+
+function analyzeInput(value) {
+  const v = value || '';
+  const detected = [];
+  let score = 0;
+
+  if (signals.sql.test(v)) { detected.push('sql'); score += 0.7; }
+  if (signals.xss.test(v)) { detected.push('xss'); score += 0.75; }
+  if (signals.path.test(v)) { detected.push('path'); score += 0.6; }
+  if (signals.cmd.test(v)) { detected.push('cmd'); score += 0.65; }
+  if (signals.special(v)) { score += 0.2; }
+  if (v.length > 100) { score += 0.15; }
+
+  // Brute force detection
+  const now = Date.now();
+  if (loginAttempts > 3 && (now - lastLoginTime) < 30000) {
+    detected.push('brute'); score += 0.4;
+  }
+
+  score = Math.min(score, 0.99);
+  return { detected, score };
+}
+
+function updateMeter(username, password) {
+  const combined = username + ' ' + password;
+  const { detected, score } = analyzeInput(combined);
+
+  const scoreEl = document.getElementById('threatScoreDisplay');
+  const bar = document.getElementById('threatBarFill');
+  const dot = document.getElementById('dotIndicator');
+  const scanLine = document.getElementById('scanLine');
+
+  // Update display
+  scoreEl.textContent = score.toFixed(2);
+  bar.style.width = (score * 100) + '%';
+
+  // Color coding
+  if (score >= 0.55) {
+    scoreEl.style.color = 'var(--danger)';
+    bar.style.background = 'linear-gradient(90deg, var(--warn), var(--danger))';
+    dot.className = 'dot danger';
+    scanLine.classList.add('active');
+  } else if (score >= 0.25) {
+    scoreEl.style.color = 'var(--warn)';
+    bar.style.background = 'linear-gradient(90deg, var(--accent), var(--warn))';
+    dot.className = 'dot warn';
+    scanLine.classList.remove('active');
+  } else {
+    scoreEl.style.color = 'var(--success)';
+    bar.style.background = 'linear-gradient(90deg, var(--success), var(--accent))';
+    dot.className = 'dot';
+    scanLine.classList.remove('active');
+  }
+
+  // Signal chips
+  document.getElementById('chip-sql').classList.toggle('active', detected.includes('sql'));
+  document.getElementById('chip-xss').classList.toggle('active', detected.includes('xss'));
+  document.getElementById('chip-path').classList.toggle('active', detected.includes('path'));
+  document.getElementById('chip-cmd').classList.toggle('active', detected.includes('cmd'));
+  document.getElementById('chip-brute').classList.toggle('active', detected.includes('brute'));
+  document.getElementById('chip-ok').classList.toggle('active', detected.length === 0 && combined.trim().length > 0);
+
+  // Per-input analysis labels
+  updateInputLabel('usernameAnalysis', username);
+  updateInputLabel('passwordAnalysis', password);
+}
+
+function updateInputLabel(id, value) {
+  const el = document.getElementById(id);
+  if (!value) { el.textContent = ''; el.className = 'input-analysis'; return; }
+
+  const { detected, score } = analyzeInput(value);
+  const input = document.getElementById(id.replace('Analysis', ''));
+
+  if (detected.length > 0) {
+    el.textContent = `⚠ ${detected[0].toUpperCase()} DETECTED`;
+    el.className = 'input-analysis threat';
+    input.classList.add('threat-input');
+  } else if (score > 0.1) {
+    el.textContent = 'SCANNING...';
+    el.className = 'input-analysis detecting';
+    input.classList.remove('threat-input');
+  } else {
+    el.textContent = '✓ CLEAN';
+    el.className = 'input-analysis';
+    input.classList.remove('threat-input');
+  }
+}
+
+// Live analysis on input
+document.getElementById('username').addEventListener('input', e => {
+  updateMeter(e.target.value, document.getElementById('password').value);
+});
+document.getElementById('password').addEventListener('input', e => {
+  updateMeter(document.getElementById('username').value, e.target.value);
+});
+
+// ─── Login form submission ─────────────────────────────────────────────────
+function showAlert(type, msg) {
+  const box = document.getElementById('alertBox');
+  const msgEl = document.getElementById('alertMsg');
+  const iconEl = document.getElementById('alertIcon');
+  const icons = { error: '✕', warning: '⚠', info: 'ℹ', success: '✓' };
+  box.className = `alert-box show ${type}`;
+  iconEl.textContent = icons[type] || '•';
+  msgEl.textContent = msg;
+}
+
+document.getElementById('loginForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+  const btn = document.getElementById('submitBtn');
+
+  loginAttempts++;
+  lastLoginTime = Date.now();
+  updateMeter(username, password);
+
+  btn.disabled = true;
+  btn.classList.add('loading');
+  document.getElementById('alertBox').classList.remove('show');
+
+  try {
+    const res = await fetch('/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password })
+    });
+    const data = await res.json();
+
+    if (data.success) {
+      showAlert('success', `Access granted. Welcome, ${data.user.username}!`);
+      setTimeout(() => { window.location.href = data.redirect || '/dashboard'; }, 800);
+    } else {
+      showAlert('error', data.message || 'Invalid credentials');
+    }
+  } catch (err) {
+    showAlert('error', 'Connection error: ' + err.message);
+  } finally {
+    btn.disabled = false;
+    btn.classList.remove('loading');
+  }
+});
+</script>
+</body>
+</html>

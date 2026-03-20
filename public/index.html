@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NexCorp — Enterprise Solutions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #080c10;
+    --surface: #0d1520;
+    --border: #1a2840;
+    --accent: #00d4ff;
+    --accent2: #ff3366;
+    --text: #e8edf5;
+    --muted: #6b7fa3;
+    --glow: rgba(0, 212, 255, 0.15);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', 'Segoe UI', system-ui, sans-serif, 'Segoe UI', system-ui, sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* Grid noise texture */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 4rem;
+    background: rgba(8,12,16,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    font-family: 'Syne', 'Segoe UI', system-ui, sans-serif;
+    font-weight: 800;
+    font-size: 1.4rem;
+    letter-spacing: -0.02em;
+    color: var(--accent);
+  }
+
+  .logo span { color: var(--text); }
+
+  nav ul {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  nav a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  nav a:hover { color: var(--accent); }
+
+  .nav-cta {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .btn {
+    padding: 0.6rem 1.5rem;
+    border-radius: 4px;
+    font-family: 'DM Sans', 'Segoe UI', system-ui, sans-serif, 'Segoe UI', system-ui, sans-serif;
+    font-size: 0.85rem;
+    font-weight: 400;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .btn-outline {
+    border: 1px solid var(--border);
+    color: var(--muted);
+    background: transparent;
+  }
+
+  .btn-outline:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #000;
+    border: 1px solid var(--accent);
+    font-weight: 600;
+  }
+
+  .btn-primary:hover {
+    background: transparent;
+    color: var(--accent);
+  }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 8rem 4rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-glow {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(0,212,255,0.08) 0%, transparent 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.3rem 1rem;
+    border: 1px solid rgba(0,212,255,0.3);
+    border-radius: 20px;
+    font-size: 0.75rem;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    background: rgba(0,212,255,0.05);
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  h1 {
+    font-family: 'Syne', 'Segoe UI', system-ui, sans-serif;
+    font-weight: 800;
+    font-size: clamp(3rem, 5vw, 5rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+  }
+
+  h1 em {
+    font-style: normal;
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    font-size: 1.1rem;
+    color: var(--muted);
+    max-width: 500px;
+    margin-bottom: 2.5rem;
+    line-height: 1.7;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-lg {
+    padding: 0.9rem 2rem;
+    font-size: 0.95rem;
+  }
+
+  /* Stats strip */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    z-index: 1;
+  }
+
+  .stat {
+    padding: 2.5rem;
+    background: var(--bg);
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Syne', 'Segoe UI', system-ui, sans-serif;
+    font-weight: 800;
+    font-size: 2.5rem;
+    color: var(--accent);
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 0.8rem;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-top: 0.3rem;
+  }
+
+  /* Features */
+  .section {
+    padding: 6rem 4rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .section-tag {
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  h2 {
+    font-family: 'Syne', 'Segoe UI', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 2.5rem;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .feature {
+    padding: 2.5rem;
+    background: var(--surface);
+    transition: background 0.2s;
+  }
+
+  .feature:hover {
+    background: #111d2e;
+  }
+
+  .feature-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    background: rgba(0,212,255,0.1);
+    border: 1px solid rgba(0,212,255,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .feature h3 {
+    font-family: 'Syne', 'Segoe UI', system-ui, sans-serif;
+    font-weight: 600;
+    font-size: 1.05rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .feature p {
+    font-size: 0.88rem;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  /* CTA Banner */
+  .cta-banner {
+    margin: 0 4rem 6rem;
+    padding: 4rem;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: linear-gradient(135deg, rgba(0,212,255,0.05), rgba(255,51,102,0.05));
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  .cta-banner::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(0,212,255,0.06), transparent 60%);
+  }
+
+  .cta-banner h2 {
+    font-size: 2rem;
+    max-width: 500px;
+  }
+
+  /* Footer */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  footer p {
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  /* Ticker / Alert banner */
+  .alert-bar {
+    background: rgba(255,51,102,0.1);
+    border-bottom: 1px solid rgba(255,51,102,0.3);
+    padding: 0.4rem 0;
+    overflow: hidden;
+    position: relative;
+    z-index: 99;
+    margin-top: 65px;
+  }
+
+  .ticker {
+    display: flex;
+    animation: ticker 30s linear infinite;
+    white-space: nowrap;
+  }
+
+  .ticker span {
+    padding: 0 3rem;
+    font-size: 0.75rem;
+    color: rgba(255,51,102,0.8);
+    letter-spacing: 0.05em;
+  }
+
+  @keyframes ticker {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* Animate in */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeUp 0.7s ease forwards;
+  }
+
+  .fade-up:nth-child(2) { animation-delay: 0.1s; }
+  .fade-up:nth-child(3) { animation-delay: 0.2s; }
+  .fade-up:nth-child(4) { animation-delay: 0.3s; }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+  <div class="logo">Nex<span>Corp</span></div>
+  <ul>
+    <li><a href="#features">Products</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-cta">
+    <a href="/login" class="btn btn-outline">Sign In</a>
+    <a href="/login" class="btn btn-primary">Get Access →</a>
+  </div>
+</nav>
+
+<!-- Ticker -->
+<div class="alert-bar">
+  <div class="ticker">
+    <span>⚠ SECURITY TRAINING ENVIRONMENT — NOT FOR PRODUCTION USE</span>
+    <span>•</span>
+    <span>All vulnerabilities are intentional — for educational purposes only</span>
+    <span>•</span>
+    <span>⚠ SECURITY TRAINING ENVIRONMENT — NOT FOR PRODUCTION USE</span>
+    <span>•</span>
+    <span>All vulnerabilities are intentional — for educational purposes only</span>
+    <span>•</span>
+  </div>
+</div>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-badge fade-up">Platform v2.4 — Now live</div>
+    <h1 class="fade-up">Enterprise Data<br><em>Infrastructure</em><br>Reimagined.</h1>
+    <p class="hero-sub fade-up">NexCorp delivers cutting-edge data management, real-time analytics, and secure cloud infrastructure for Fortune 500 enterprises.</p>
+    <div class="hero-actions fade-up">
+      <a href="/login" class="btn btn-primary btn-lg">Access Portal →</a>
+      <a href="#features" class="btn btn-outline btn-lg">Learn More</a>
+    </div>
+  </div>
+</section>
+
+<!-- Stats -->
+<div class="stats">
+  <div class="stat">
+    <span class="stat-num" id="c1">0</span>
+    <span class="stat-label">Enterprise Clients</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num" id="c2">0</span>
+    <span class="stat-label">TB Data Processed</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num" id="c3">0</span>
+    <span class="stat-label">Uptime SLA</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num" id="c4">0</span>
+    <span class="stat-label">Security Incidents</span>
+  </div>
+</div>
+
+<!-- Features -->
+<section class="section" id="features">
+  <div class="section-header">
+    <span class="section-tag">What We Offer</span>
+    <h2>Built for scale.<br>Secured by design.</h2>
+  </div>
+  <div class="features-grid">
+    <div class="feature"><div class="feature-icon">🔐</div><h3>Identity Management</h3><p>Role-based access control with multi-factor authentication and SSO integration across all enterprise systems.</p></div>
+    <div class="feature"><div class="feature-icon">📊</div><h3>Real-time Analytics</h3><p>Process billions of events per second with sub-millisecond latency across distributed data pipelines.</p></div>
+    <div class="feature"><div class="feature-icon">☁️</div><h3>Cloud Infrastructure</h3><p>Multi-region deployment with automatic failover, 99.99% uptime SLA, and zero-downtime migrations.</p></div>
+    <div class="feature"><div class="feature-icon">🤖</div><h3>AI Operations</h3><p>Intelligent anomaly detection, predictive scaling, and automated incident response powered by ML.</p></div>
+    <div class="feature"><div class="feature-icon">🔗</div><h3>API Gateway</h3><p>Unified API management with rate limiting, versioning, and comprehensive developer documentation.</p></div>
+    <div class="feature"><div class="feature-icon">📋</div><h3>Compliance Suite</h3><p>SOC 2 Type II, ISO 27001, GDPR, and HIPAA compliance tooling with automated audit reporting.</p></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-banner" id="contact">
+  <div>
+    <h2>Ready to secure<br>your infrastructure?</h2>
+    <p style="color:var(--muted); margin-top:0.8rem; font-size:0.9rem;">Join thousands of enterprises already using NexCorp.</p>
+  </div>
+  <a href="/login" class="btn btn-primary btn-lg">Get Started Free →</a>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="logo" style="font-size:1rem;">Nex<span>Corp</span></div>
+  <p>© 2024 NexCorp Inc. All rights reserved. — <span style="color:var(--accent2)">Training Environment</span></p>
+  <p><a href="/admin" style="color:var(--muted); text-decoration:none; font-size:0.8rem;">Admin Portal</a></p>
+</footer>
+
+<script>
+// Count-up animation
+function countUp(id, target, suffix, duration = 2000) {
+  const el = document.getElementById(id);
+  const start = Date.now();
+  const tick = () => {
+    const progress = Math.min((Date.now() - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - progress, 3);
+    el.textContent = Math.floor(ease * target) + suffix;
+    if (progress < 1) requestAnimationFrame(tick);
+  };
+  tick();
+}
+
+// Trigger when stats are in view
+const observer = new IntersectionObserver(entries => {
+  if (entries[0].isIntersecting) {
+    countUp('c1', 2400, '+');
+    countUp('c2', 850, 'PB');
+    countUp('c3', 99.99, '%');
+    countUp('c4', 0, '');
+    observer.disconnect();
+  }
+});
+observer.observe(document.querySelector('.stats'));
+</script>
+</body>
+</html>
