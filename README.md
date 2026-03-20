@@ -160,3 +160,7 @@ This project is for **security education only**. It intentionally contains dange
 - Your local machine (`localhost`)
 - An isolated VM / lab network
 - Never on a public IP or cloud server
+
+##License
+
+MIT
